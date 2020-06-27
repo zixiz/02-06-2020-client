@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
@@ -57,7 +57,13 @@ const Register = (props) => {
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
 
-
+  useEffect(() => {
+    const user = AuthService.getCurrentUser();
+    if(user){
+      props.history.push("/profile");
+      window.location.reload();
+    }
+  });
 
   const onChangeEmail = (e) => {
     const email = e.target.value;

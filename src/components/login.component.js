@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect } from "react";
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import CheckButton from "react-validation/build/button";
@@ -16,6 +16,7 @@ const required = (value) => {
 };
 
 const Login = (props) => {
+
   const form = useRef();
   const checkBtn = useRef();
 
@@ -23,6 +24,14 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    const user = AuthService.getCurrentUser();
+    if(user){
+      props.history.push("/profile");
+      window.location.reload();
+    }
+  });
 
   const onChaneEmail = (e) => {
     const email = e.target.value;
@@ -33,6 +42,7 @@ const Login = (props) => {
     const password = e.target.value;
     setPassword(password);
   };
+  
 
   const handleLogin = (e) => {
     e.preventDefault();
